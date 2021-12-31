@@ -1,4 +1,9 @@
+#define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
+#define PY_ARRAY_UNIQUE_SYMBOL white_elephant_ARRAY_API
+
 #include <Python.h>
+#include <numpy/arrayobject.h>
+#include <numpy/ndarraytypes.h>
 #include "simulate.h"
 
 static const char module_docstring[] = "Run white elephant simulations";
@@ -26,5 +31,6 @@ PyObject *PyInit_white_elephant(void)
     {
         return NULL;
     }
+    import_array();
     return m;
 }

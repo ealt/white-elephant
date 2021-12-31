@@ -2,6 +2,8 @@
 
 PyObject *_simulate(PyObject *self)
 {
-    printf("running simulations...\n");
-    Py_RETURN_NONE;
+    int nd = 2;
+    npy_intp dims[] = {3, 4};
+    int *data = (int *)calloc(12, sizeof(int));
+    return PyArray_SimpleNewFromData(nd, dims, NPY_INT32, data);
 }

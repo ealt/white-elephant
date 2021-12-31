@@ -1,0 +1,5 @@
+.vscode/
+config.yaml
+*.pyc
+*.so
+*.o
