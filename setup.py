@@ -11,6 +11,7 @@ we_module = Extension(
     sources=[
         'white_elephant.c',
         'simulate.c',
+        'count_array.c',
     ],
     include_dirs=[f'{py_lib_path}/dist-packages/numpy/core/include/'])
 

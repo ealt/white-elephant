@@ -7,6 +7,7 @@
 
 #include <Python.h>
 #include <numpy/arrayobject.h>
+#include "count_array.h"
 
 PyObject *_simulate(PyObject *self);
 
