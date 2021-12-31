@@ -1,15 +1,10 @@
 #include <Python.h>
-
-PyObject *_hello_world(PyObject *self)
-{
-    printf("Hello, World!\n");
-    Py_RETURN_NONE;
-}
+#include "simulate.h"
 
 static const char module_docstring[] = "Run white elephant simulations";
 
 static PyMethodDef ModuleMethods[] = {
-    {"hello_world", (PyCFunction)_hello_world, METH_NOARGS, "Prints Hello, world!"},
+    {"simulate", (PyCFunction)_simulate, METH_NOARGS, "Runs simulations"},
     {NULL, NULL, 0, NULL}};
 
 static struct PyModuleDef _module = {
