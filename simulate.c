@@ -16,6 +16,7 @@ PyObject *_simulate(PyObject *self, PyObject *args)
     long n;
     if (!PyArg_ParseTuple(args, "l", &n))
     {
+        PyErr_BadArgument();
         return NULL;
     }
     int nd = 2;
