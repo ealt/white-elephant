@@ -1,6 +1,6 @@
 #include "simulate.h"
 
-static unsigned long long *get_counts(long int n)
+static unsigned long long *get_counts(size_t n)
 {
     size_t nd = 2;
     size_t dims[] = {n, n};
@@ -13,8 +13,8 @@ static unsigned long long *get_counts(long int n)
 
 PyObject *_simulate(PyObject *self, PyObject *args)
 {
-    long n;
-    if (!PyArg_ParseTuple(args, "l", &n))
+    size_t n;
+    if (!PyArg_ParseTuple(args, "k", &n))
     {
         PyErr_BadArgument();
         return NULL;
