@@ -7,8 +7,8 @@ import white_elephant
 class WhiteElephantTest(unittest.TestCase):
 
     def test_simulate(self):
-        actual = white_elephant.simulate()
-        expected = np.zeros((3, 4), np.uint64)
+        actual = white_elephant.simulate(4)
+        expected = np.zeros((4, 4), np.uint64)
         self.assertTrue(np.array_equal(actual, expected))
 
 

@@ -9,7 +9,7 @@
 static const char module_docstring[] = "Run white elephant simulations";
 
 static PyMethodDef ModuleMethods[] = {
-    {"simulate", (PyCFunction)_simulate, METH_NOARGS, "Runs simulations"},
+    {"simulate", (PyCFunction)_simulate, METH_VARARGS, "Runs simulations"},
     {NULL, NULL, 0, NULL}};
 
 static struct PyModuleDef _module = {

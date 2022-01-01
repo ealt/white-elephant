@@ -1,9 +1,9 @@
 #include "simulate.h"
 
-static unsigned long long *get_counts(void)
+static unsigned long long *get_counts(long int n)
 {
     size_t nd = 2;
-    size_t dims[] = {3, 4};
+    size_t dims[] = {n, n};
     CountArray *arr = create(nd, dims);
     unsigned long long *data = (unsigned long long *)malloc(arr->size * sizeof(unsigned long long));
     memcpy(data, arr->data, arr->size * sizeof(unsigned long long));
@@ -11,10 +11,15 @@ static unsigned long long *get_counts(void)
     return data;
 }
 
-PyObject *_simulate(PyObject *self)
+PyObject *_simulate(PyObject *self, PyObject *args)
 {
+    long n;
+    if (!PyArg_ParseTuple(args, "l", &n))
+    {
+        return NULL;
+    }
     int nd = 2;
-    npy_intp dims[] = {3, 4};
-    unsigned long long *data = get_counts();
+    npy_intp dims[] = {n, n};
+    unsigned long long *data = get_counts(n);
     return PyArray_SimpleNewFromData(nd, dims, NPY_UINT64, data);
 }

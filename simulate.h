@@ -9,6 +9,6 @@
 #include <numpy/arrayobject.h>
 #include "count_array.h"
 
-PyObject *_simulate(PyObject *self);
+PyObject *_simulate(PyObject *self, PyObject *args);
 
 #endif
