@@ -14,4 +14,11 @@ we_module = Extension('white_elephant',
                       ],
                       include_dirs=[f'{py_pkgs_path}/numpy/core/include/'])
 
-setup(ext_modules=[we_module])
+pi_module = Extension('perm_iter',
+                      sources=[
+                          'perm_iter_mod.c',
+                          'perm_iter.c',
+                      ],
+                      include_dirs=[f'{py_pkgs_path}/numpy/core/include/'])
+
+setup(ext_modules=[we_module, pi_module])

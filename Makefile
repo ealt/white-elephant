@@ -6,3 +6,4 @@ install:
 
 test:
 	python white_elephant_test.py
+	python perm_iter_test.py
