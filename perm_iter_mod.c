@@ -7,7 +7,66 @@
 #include <numpy/ndarraytypes.h>
 #include "perm_iter.h"
 
-static unsigned int *get_data(size_t n, unsigned int k)
+static unsigned long factorial(size_t n)
+{
+    unsigned long x = 1;
+    for (unsigned long i = 1; i <= n; i++)
+    {
+        x *= i;
+    }
+    return x;
+}
+
+static void clean(unsigned int *arr, perm_state *st)
+{
+    free(arr);
+    arr = NULL;
+    destroy_perm_state(st);
+}
+
+static unsigned int *get_data(size_t n)
+{
+    unsigned int *arr = init_perm(n);
+    perm_state *st = create_perm_state(n);
+    unsigned long fn = factorial(n);
+    unsigned int *data = (unsigned int *)malloc(fn * n * sizeof(unsigned int));
+    for (unsigned long i = 0; i < fn; i++)
+    {
+        if (st->complete)
+        {
+            PyErr_SetString(PyExc_RuntimeError, "Premature permutation complete");
+            free(data);
+            data = NULL;
+            break;
+        }
+        memcpy(data + (i * n), arr, n * sizeof(unsigned int));
+        next(st, arr);
+    }
+    if (!st->complete)
+    {
+        PyErr_SetString(PyExc_RuntimeError, "Permutation incomplete");
+        free(data);
+        data = NULL;
+    }
+    clean(arr, st);
+    return data;
+}
+
+static PyObject *_get_perms(PyObject *self, PyObject *args)
+{
+    size_t n;
+    if (!PyArg_ParseTuple(args, "k", &n))
+    {
+        PyErr_BadArgument();
+        return NULL;
+    }
+    int nd = 2;
+    npy_intp dims[] = {factorial(n), n};
+    unsigned int *data = get_data(n);
+    return PyArray_SimpleNewFromData(nd, dims, NPY_UINT32, data);
+}
+
+static unsigned int *get_rand_data(size_t n, unsigned int k)
 {
     srand(42);
     unsigned int *data = (unsigned int *)malloc(n * k * sizeof(unsigned int));
@@ -20,7 +79,7 @@ static unsigned int *get_data(size_t n, unsigned int k)
     return data;
 }
 
-static PyObject *_get_perms(PyObject *self, PyObject *args)
+static PyObject *_get_rand_perms(PyObject *self, PyObject *args)
 {
     size_t n;
     unsigned int k;
@@ -31,7 +90,7 @@ static PyObject *_get_perms(PyObject *self, PyObject *args)
     }
     int nd = 2;
     npy_intp dims[] = {k, n};
-    unsigned int *data = get_data(n, k);
+    unsigned int *data = get_rand_data(n, k);
     return PyArray_SimpleNewFromData(nd, dims, NPY_UINT32, data);
 }
 
@@ -39,6 +98,7 @@ static const char module_docstring[] = "Get permutations";
 
 static PyMethodDef ModuleMethods[] = {
     {"get_perms", (PyCFunction)_get_perms, METH_VARARGS, "Get permutations"},
+    {"get_rand_perms", (PyCFunction)_get_rand_perms, METH_VARARGS, "Get random permutations"},
     {NULL, NULL, 0, NULL}};
 
 static struct PyModuleDef _module = {
