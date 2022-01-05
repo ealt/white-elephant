@@ -1,9 +1,15 @@
-#include <string.h>
 #include "simulate.h"
 
 static void simulate_game(size_t n, unsigned int *perm, unsigned int *result)
 {
-    memcpy(result, perm, n * sizeof(unsigned int));
+    unsigned int turn = 0;
+    unsigned int active = 0;
+    while (turn < n)
+    {
+        result[active] = perm[turn];
+        turn++;
+        active = turn;
+    }
 }
 
 static unsigned long long *simulate_all_games(size_t n)
