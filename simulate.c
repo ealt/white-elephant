@@ -2,13 +2,14 @@
 
 static unsigned long long *get_counts(size_t n)
 {
-    size_t nd = 2;
-    size_t dims[] = {n, n};
-    CountArray *arr = create(nd, dims);
-    unsigned long long *data = (unsigned long long *)malloc(arr->size * sizeof(unsigned long long));
-    memcpy(data, arr->data, arr->size * sizeof(unsigned long long));
-    destroy(arr);
-    return data;
+    unsigned long long *counts = (unsigned long long *)calloc(n * n, sizeof(unsigned long long));
+    unsigned int *result = init_perm(n);
+    perm_state *st = create_perm_state(n);
+    update(n, counts, result);
+    next(st, result);
+    update(n, counts, result);
+    destroy_perm_state(st);
+    return counts;
 }
 
 PyObject *_simulate(PyObject *self, PyObject *args)

@@ -55,3 +55,11 @@ void set(CountArray *arr, unsigned int idxs[], unsigned long long val)
 {
     arr->data[idxs_to_idx(arr, idxs)] = val;
 }
+
+void update(size_t n, unsigned long long *counts, unsigned int *result)
+{
+    for (unsigned int i = 0; i < n; i++)
+    {
+        counts[i * n + result[i]]++;
+    }
+}

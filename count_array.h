@@ -20,4 +20,6 @@ void destroy(CountArray *arr);
 unsigned long long get(CountArray *arr, unsigned int idxs[]);
 void set(CountArray *arr, unsigned int idxs[], unsigned long long val);
 
+void update(size_t n, unsigned long long *counts, unsigned int *result);
+
 #endif
