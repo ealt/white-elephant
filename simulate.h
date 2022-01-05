@@ -11,6 +11,6 @@
 #include "count_array.h"
 #include "perm_iter.h"
 
-PyObject *_simulate(PyObject *self, PyObject *args);
+PyObject *_simulate(PyObject *self, PyObject *args, PyObject *kw);
 
 #endif
