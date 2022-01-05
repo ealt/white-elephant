@@ -1,5 +1,6 @@
 import numpy as np
 import unittest
+from math import factorial
 
 import white_elephant
 
@@ -7,13 +8,10 @@ import white_elephant
 class WhiteElephantTest(unittest.TestCase):
 
     def test_simulate(self):
-        actual = white_elephant.simulate(4)
-        expected = np.array([
-            [1, 1, 0, 0],
-            [1, 1, 0, 0],
-            [0, 0, 2, 0],
-            [0, 0, 0, 2],
-        ], np.uint64)
+        n = 4
+        actual = white_elephant.simulate(n)
+        print(actual)
+        expected = factorial(n - 1) * np.ones((n, n), np.uint64)
         self.assertTrue(np.array_equal(actual, expected))
 
     def test_simulate_bad_arg(self):
