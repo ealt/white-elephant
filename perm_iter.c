@@ -67,6 +67,7 @@ void next(perm_state *st, unsigned int *arr)
     }
     st->complete = 1;
 }
+
 void rand_next(size_t n, unsigned int *arr)
 // https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
 {
