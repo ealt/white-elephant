@@ -1,5 +1,17 @@
 #include "simulate.h"
 
+unsigned int *create_result(size_t n)
+{
+    unsigned int *result = (unsigned int *)malloc(n * sizeof(unsigned int));
+    return result;
+}
+
+void destroy_result(unsigned int *result)
+{
+    free(result);
+    result = NULL;
+}
+
 static void simulate_game(size_t n, unsigned int *perm, unsigned int *result)
 {
     unsigned int turn = 0;
@@ -17,14 +29,14 @@ static unsigned long long *simulate_all_games(size_t n)
     unsigned long long *counts = (unsigned long long *)calloc(n * n, sizeof(unsigned long long));
     unsigned int *perm = create_perm(n);
     perm_state *st = create_perm_state(n);
-    unsigned int *result = (unsigned int *)malloc(n * sizeof(unsigned int));
+    unsigned int *result = create_result(n);
     while (!st->complete)
     {
         simulate_game(n, perm, result);
         update(n, counts, result);
         next(st, perm);
     }
-    free(result);
+    destroy_result(result);
     destroy_perm_state(st);
     destroy_perm(perm);
     return counts;
@@ -34,14 +46,14 @@ static unsigned long long *simulate_random_games(size_t n, unsigned long k)
 {
     unsigned long long *counts = (unsigned long long *)calloc(n * n, sizeof(unsigned long long));
     unsigned int *perm = create_perm(n);
-    unsigned int *result = (unsigned int *)malloc(n * sizeof(unsigned int));
+    unsigned int *result = create_result(n);
     for (unsigned long i = 0; i < k; i++)
     {
         rand_next(n, perm);
         simulate_game(n, perm, result);
         update(n, counts, result);
     }
-    free(result);
+    destroy_result(result);
     destroy_perm(perm);
     return counts;
 }
