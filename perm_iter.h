@@ -12,7 +12,9 @@ typedef struct perm_state
     int complete;
 } perm_state;
 
-unsigned int *init_perm(size_t n);
+unsigned int *create_perm(size_t n);
+
+void destroy_perm(unsigned int *perm);
 
 perm_state *create_perm_state(size_t n);
 

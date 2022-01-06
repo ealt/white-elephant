@@ -15,7 +15,7 @@ static void simulate_game(size_t n, unsigned int *perm, unsigned int *result)
 static unsigned long long *simulate_all_games(size_t n)
 {
     unsigned long long *counts = (unsigned long long *)calloc(n * n, sizeof(unsigned long long));
-    unsigned int *perm = init_perm(n);
+    unsigned int *perm = create_perm(n);
     perm_state *st = create_perm_state(n);
     unsigned int *result = (unsigned int *)malloc(n * sizeof(unsigned int));
     while (!st->complete)
@@ -26,14 +26,14 @@ static unsigned long long *simulate_all_games(size_t n)
     }
     free(result);
     destroy_perm_state(st);
-    free(perm);
+    destroy_perm(perm);
     return counts;
 }
 
 static unsigned long long *simulate_random_games(size_t n, unsigned long k)
 {
     unsigned long long *counts = (unsigned long long *)calloc(n * n, sizeof(unsigned long long));
-    unsigned int *perm = init_perm(n);
+    unsigned int *perm = create_perm(n);
     unsigned int *result = (unsigned int *)malloc(n * sizeof(unsigned int));
     for (unsigned long i = 0; i < k; i++)
     {
@@ -42,7 +42,7 @@ static unsigned long long *simulate_random_games(size_t n, unsigned long k)
         update(n, counts, result);
     }
     free(result);
-    free(perm);
+    destroy_perm(perm);
     return counts;
 }
 

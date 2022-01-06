@@ -7,7 +7,7 @@ static void swap(unsigned int *arr, unsigned int i, int j)
     arr[j] = temp;
 }
 
-unsigned int *init_perm(size_t n)
+unsigned int *create_perm(size_t n)
 {
     unsigned int *arr = (unsigned int *)malloc(n * sizeof(unsigned int));
     for (unsigned int i = 0; i < n; i++)
@@ -15,6 +15,12 @@ unsigned int *init_perm(size_t n)
         arr[i] = i;
     }
     return arr;
+}
+
+void destroy_perm(unsigned int *perm)
+{
+    free(perm);
+    perm = NULL;
 }
 
 perm_state *create_perm_state(size_t n)

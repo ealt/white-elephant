@@ -17,16 +17,9 @@ static unsigned long factorial(size_t n)
     return x;
 }
 
-static void clean(unsigned int *arr, perm_state *st)
-{
-    free(arr);
-    arr = NULL;
-    destroy_perm_state(st);
-}
-
 static unsigned int *get_data(size_t n)
 {
-    unsigned int *arr = init_perm(n);
+    unsigned int *arr = create_perm(n);
     perm_state *st = create_perm_state(n);
     unsigned long fn = factorial(n);
     unsigned int *data = (unsigned int *)malloc(fn * n * sizeof(unsigned int));
@@ -48,7 +41,8 @@ static unsigned int *get_data(size_t n)
         free(data);
         data = NULL;
     }
-    clean(arr, st);
+    destroy_perm_state(st);
+    destroy_perm(arr);
     return data;
 }
 
@@ -70,12 +64,13 @@ static unsigned int *get_rand_data(size_t n, unsigned int k)
 {
     srand(42);
     unsigned int *data = (unsigned int *)malloc(n * k * sizeof(unsigned int));
-    unsigned int *arr = init_perm(n);
+    unsigned int *arr = create_perm(n);
     for (unsigned int i = 0; i < k; i++)
     {
         memcpy(data + (i * n), arr, n * sizeof(unsigned int));
         rand_next(n, arr);
     }
+    destroy_perm(arr);
     return data;
 }
 
