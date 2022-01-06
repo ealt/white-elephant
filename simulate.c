@@ -12,49 +12,79 @@ void destroy_result(unsigned int *result)
     result = NULL;
 }
 
-static void simulate_game(size_t n, unsigned int *perm, unsigned int *result)
+typedef struct sim_data
 {
-    unsigned int turn = 0;
-    unsigned int active = 0;
-    while (turn < n)
+    size_t n;
+    unsigned int *perm;
+    unsigned int *result;
+    unsigned int turn;
+    unsigned int active;
+} sim_data;
+
+sim_data create_sim_data(size_t n)
+{
+    struct sim_data sd =
+        {
+            n,
+            create_perm(n),
+            create_result(n),
+            0,
+            0,
+        };
+    return sd;
+}
+
+void reset_sim_data(sim_data *sd)
+{
+    sd->turn = 0;
+    sd->active = 0;
+}
+
+void destory_sim_data(sim_data *sd)
+{
+    destroy_perm(sd->perm);
+    destroy_result(sd->result);
+}
+
+static void simulate_game(sim_data *sd)
+{
+    while (sd->turn < sd->n)
     {
-        result[active] = perm[turn];
-        turn++;
-        active = turn;
+        sd->result[sd->active] = sd->perm[sd->turn];
+        sd->turn++;
+        sd->active = sd->turn;
     }
 }
 
 static unsigned long long *simulate_all_games(size_t n)
 {
     unsigned long long *counts = (unsigned long long *)calloc(n * n, sizeof(unsigned long long));
-    unsigned int *perm = create_perm(n);
     perm_state *st = create_perm_state(n);
-    unsigned int *result = create_result(n);
+    sim_data sd = create_sim_data(n);
     while (!st->complete)
     {
-        simulate_game(n, perm, result);
-        update(n, counts, result);
-        next(st, perm);
+        simulate_game(&sd);
+        update(n, counts, sd.result);
+        reset_sim_data(&sd);
+        next(st, sd.perm);
     }
-    destroy_result(result);
+    destory_sim_data(&sd);
     destroy_perm_state(st);
-    destroy_perm(perm);
     return counts;
 }
 
 static unsigned long long *simulate_random_games(size_t n, unsigned long k)
 {
     unsigned long long *counts = (unsigned long long *)calloc(n * n, sizeof(unsigned long long));
-    unsigned int *perm = create_perm(n);
-    unsigned int *result = create_result(n);
+    sim_data sd = create_sim_data(n);
     for (unsigned long i = 0; i < k; i++)
     {
-        rand_next(n, perm);
-        simulate_game(n, perm, result);
-        update(n, counts, result);
+        rand_next(n, sd.perm);
+        simulate_game(&sd);
+        update(n, counts, sd.result);
+        reset_sim_data(&sd);
     }
-    destroy_result(result);
-    destroy_perm(perm);
+    destory_sim_data(&sd);
     return counts;
 }
 
