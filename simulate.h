@@ -12,6 +12,7 @@
 #include "elem.h"
 #include "heap.h"
 #include "perm_iter.h"
+#include "queue.h"
 
 PyObject *_simulate(PyObject *self, PyObject *args, PyObject *kw);
 
