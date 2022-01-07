@@ -34,7 +34,7 @@ static PyObject *_push_pop(PyObject *self, PyObject *args)
         }
         for (unsigned int j = 0; j < k; j++)
         {
-            data[(i * k) + j] = queue_top(q)->key;
+            data[(i * k) + j] = queue_front(q)->key;
             queue_pop(q);
         }
     }

@@ -5,14 +5,16 @@ queue *create_queue(size_t n)
     queue *q = (queue *)malloc(sizeof(queue));
     q->arr = (elem **)malloc(n * sizeof(elem *));
     q->max_size = n;
-    q->first = 0;
-    q->next = 0;
+    q->size = 0;
+    q->front = 0;
+    q->back = n - 1;
     return q;
 }
 void clear_queue(queue *q)
 {
-    q->first = 0;
-    q->next = 0;
+    q->size = 0;
+    q->front = 0;
+    q->back = q->max_size - 1;
 }
 
 void destroy_queue(queue *q)
@@ -22,22 +24,34 @@ void destroy_queue(queue *q)
     q = NULL;
 }
 
-elem *queue_top(queue *q)
+int queue_empty(queue *q)
 {
-    assert(q->first != q->next);
-    return q->arr[q->first];
+    return q->size == 0;
+}
+
+elem *queue_front(queue *q)
+{
+    assert(!queue_empty(q));
+    return q->arr[q->front];
+}
+
+elem *queue_back(queue *q)
+{
+    assert(!queue_empty(q));
+    return q->arr[q->back];
 }
 
 void queue_push(queue *q, elem *e)
 {
-    unsigned int next_next = (q->next + 1) % q->max_size;
-    assert(next_next != q->first);
-    q->arr[q->next] = e;
-    q->next = next_next;
+    assert(q->size < q->max_size);
+    q->back = (q->back + 1) % q->max_size;
+    q->arr[q->back] = e;
+    q->size++;
 }
 
 void queue_pop(queue *q)
 {
-    assert(q->first != q->next);
-    q->first = (q->first + 1) % q->max_size;
+    assert(!queue_empty(q));
+    q->front = (q->front + 1) % q->max_size;
+    q->size--;
 }

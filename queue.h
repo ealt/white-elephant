@@ -9,15 +9,18 @@ typedef struct queue
 {
     elem **arr;
     unsigned int max_size;
-    unsigned int first;
-    unsigned int next;
+    unsigned int size;
+    unsigned int front;
+    unsigned int back;
 } queue;
 
 queue *create_queue(size_t n);
 void clear_queue(queue *q);
 void destroy_queue(queue *q);
 
-elem *queue_top(queue *q);
+int queue_empty(queue *q);
+elem *queue_front(queue *q);
+elem *queue_back(queue *q);
 void queue_push(queue *q, elem *e);
 void queue_pop(queue *q);
 
