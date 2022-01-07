@@ -9,6 +9,7 @@
 #include <Python.h>
 #include <numpy/arrayobject.h>
 #include "count_array.h"
+#include "elem.h"
 #include "heap.h"
 #include "perm_iter.h"
 

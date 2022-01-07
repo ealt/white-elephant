@@ -12,6 +12,7 @@ we_module = Extension('white_elephant',
                           'simulate.c',
                           'count_array.c',
                           'perm_iter.c',
+                          'elem.c',
                           'heap.c',
                       ],
                       include_dirs=[f'{py_pkgs_path}/numpy/core/include/'])
@@ -27,6 +28,7 @@ h_module = Extension('heap',
                      sources=[
                          'heap_mod.c',
                          'heap.c',
+                         'elem.c',
                      ],
                      include_dirs=[f'{py_pkgs_path}/numpy/core/include/'])
 

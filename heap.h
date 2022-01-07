@@ -3,15 +3,7 @@
 
 #include <assert.h>
 #include <stdlib.h>
-
-typedef struct elem
-{
-    unsigned int key;
-    unsigned int owner;
-} elem;
-
-elem *create_elem_list(size_t n);
-void destroy_elem_list(elem *el);
+#include "elem.h"
 
 typedef struct heap
 {

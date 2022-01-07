@@ -4,6 +4,7 @@
 #include <Python.h>
 #include <numpy/arrayobject.h>
 #include <numpy/ndarraytypes.h>
+#include "elem.h"
 #include "heap.h"
 
 static PyObject *_get_mins(PyObject *self, PyObject *args)
@@ -19,15 +20,15 @@ static PyObject *_get_mins(PyObject *self, PyObject *args)
     int nd = 1;
     npy_intp dims[] = {n};
     unsigned int *data = (unsigned int *)malloc(n * sizeof(unsigned int));
-    elem *el = create_elem_list(n);
+    elem *arr = create_elem_arr(n);
     heap *h = create_heap(n);
     for (unsigned int i = 0; i < n; i++)
     {
-        push(h, &el[input_data[i]]);
+        push(h, &arr[input_data[i]]);
         data[i] = top(h)->key;
     }
     destroy_heap(h);
-    destroy_elem_list(el);
+    destroy_elem_arr(arr);
     return PyArray_SimpleNewFromData(nd, dims, NPY_UINT32, data);
 }
 
@@ -44,11 +45,11 @@ static PyObject *_heap_sort(PyObject *self, PyObject *args)
     int nd = 1;
     npy_intp dims[] = {n};
     unsigned int *data = (unsigned int *)malloc(n * sizeof(unsigned int));
-    elem *el = create_elem_list(n);
+    elem *arr = create_elem_arr(n);
     heap *h = create_heap(n);
     for (unsigned int i = 0; i < n; i++)
     {
-        push(h, &el[input_data[i]]);
+        push(h, &arr[input_data[i]]);
     }
     for (unsigned int i = 0; i < n; i++)
     {
@@ -56,7 +57,7 @@ static PyObject *_heap_sort(PyObject *self, PyObject *args)
         pop(h);
     }
     destroy_heap(h);
-    destroy_elem_list(el);
+    destroy_elem_arr(arr);
     return PyArray_SimpleNewFromData(nd, dims, NPY_UINT32, data);
 }
 

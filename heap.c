@@ -1,21 +1,5 @@
 #include "heap.h"
 
-elem *create_elem_list(size_t n)
-{
-    elem *el = (elem *)malloc(n * sizeof(elem));
-    for (unsigned int i = 0; i < n; i++)
-    {
-        el[i].key = i;
-    }
-    return el;
-}
-
-void destroy_elem_list(elem *el)
-{
-    free(el);
-    el = NULL;
-}
-
 heap *create_heap(size_t n)
 {
     heap *h = (heap *)malloc(sizeof(heap));
