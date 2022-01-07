@@ -9,6 +9,7 @@
 #include <Python.h>
 #include <numpy/arrayobject.h>
 #include "count_array.h"
+#include "heap.h"
 #include "perm_iter.h"
 
 PyObject *_simulate(PyObject *self, PyObject *args, PyObject *kw);

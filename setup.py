@@ -12,6 +12,7 @@ we_module = Extension('white_elephant',
                           'simulate.c',
                           'count_array.c',
                           'perm_iter.c',
+                          'heap.c',
                       ],
                       include_dirs=[f'{py_pkgs_path}/numpy/core/include/'])
 

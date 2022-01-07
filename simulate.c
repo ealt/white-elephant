@@ -17,6 +17,8 @@ typedef struct sim_data
     size_t n;
     unsigned int *perm;
     unsigned int *result;
+    elem *el;
+    heap *h;
     unsigned int turn;
     unsigned int active;
 } sim_data;
@@ -28,6 +30,8 @@ sim_data create_sim_data(size_t n)
             n,
             create_perm(n),
             create_result(n),
+            create_elem_list(n),
+            create_heap(n),
             0,
             0,
         };
@@ -36,6 +40,7 @@ sim_data create_sim_data(size_t n)
 
 void reset_sim_data(sim_data *sd)
 {
+    clear_heap(sd->h);
     sd->turn = 0;
     sd->active = 0;
 }
@@ -44,6 +49,8 @@ void destory_sim_data(sim_data *sd)
 {
     destroy_perm(sd->perm);
     destroy_result(sd->result);
+    destroy_elem_list(sd->el);
+    destroy_heap(sd->h);
 }
 
 static void simulate_game(sim_data *sd)
@@ -51,6 +58,8 @@ static void simulate_game(sim_data *sd)
     while (sd->turn < sd->n)
     {
         sd->result[sd->active] = sd->perm[sd->turn];
+        sd->el[sd->perm[sd->turn]].owner = sd->active;
+        push(sd->h, &sd->el[sd->perm[sd->turn]]);
         sd->turn++;
         sd->active = sd->turn;
     }
