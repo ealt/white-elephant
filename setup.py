@@ -22,4 +22,11 @@ pi_module = Extension('perm_iter',
                       ],
                       include_dirs=[f'{py_pkgs_path}/numpy/core/include/'])
 
-setup(ext_modules=[we_module, pi_module])
+h_module = Extension('heap',
+                     sources=[
+                         'heap_mod.c',
+                         'heap.c',
+                     ],
+                     include_dirs=[f'{py_pkgs_path}/numpy/core/include/'])
+
+setup(ext_modules=[we_module, pi_module, h_module])
