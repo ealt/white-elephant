@@ -24,8 +24,8 @@ static PyObject *_get_mins(PyObject *self, PyObject *args)
     heap *h = create_heap(n);
     for (unsigned int i = 0; i < n; i++)
     {
-        push(h, &arr[input_data[i]]);
-        data[i] = top(h)->key;
+        heap_push(h, &arr[input_data[i]]);
+        data[i] = heap_top(h)->key;
     }
     destroy_heap(h);
     destroy_elem_arr(arr);
@@ -49,12 +49,12 @@ static PyObject *_heap_sort(PyObject *self, PyObject *args)
     heap *h = create_heap(n);
     for (unsigned int i = 0; i < n; i++)
     {
-        push(h, &arr[input_data[i]]);
+        heap_push(h, &arr[input_data[i]]);
     }
     for (unsigned int i = 0; i < n; i++)
     {
-        data[i] = top(h)->key;
-        pop(h);
+        data[i] = heap_top(h)->key;
+        heap_pop(h);
     }
     destroy_heap(h);
     destroy_elem_arr(arr);

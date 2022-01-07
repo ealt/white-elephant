@@ -21,7 +21,7 @@ void destroy_heap(heap *h)
     h = NULL;
 }
 
-elem *top(heap *h)
+elem *heap_top(heap *h)
 {
     assert(h->size);
     return h->tree[0];
@@ -44,7 +44,7 @@ static void heapify_up(heap *h, unsigned int child)
     }
 }
 
-void push(heap *h, elem *e)
+void heap_push(heap *h, elem *e)
 {
     assert(h->size < h->max_size);
     h->tree[h->size] = e;
@@ -72,7 +72,7 @@ static void heapify_down(heap *h, unsigned int parent)
     }
 }
 
-void pop(heap *h)
+void heap_pop(heap *h)
 {
     assert(h->size);
     h->size--;

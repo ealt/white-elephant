@@ -22,13 +22,13 @@ void destroy_queue(queue *q)
     q = NULL;
 }
 
-elem *top(queue *q)
+elem *queue_top(queue *q)
 {
     assert(q->first != q->next);
     return q->arr[q->first];
 }
 
-void push(queue *q, elem *e)
+void queue_push(queue *q, elem *e)
 {
     unsigned int next_next = (q->next + 1) % q->max_size;
     assert(next_next != q->first);
@@ -36,7 +36,7 @@ void push(queue *q, elem *e)
     q->next = next_next;
 }
 
-void pop(queue *q)
+void queue_pop(queue *q)
 {
     assert(q->first != q->next);
     q->first = (q->first + 1) % q->max_size;

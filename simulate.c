@@ -69,19 +69,19 @@ static void simulate_game(sim_data *sd)
     {
         if (steal())
         {
-            sd->e = top(sd->h);
-            pop(sd->h);
+            sd->e = heap_top(sd->h);
+            heap_pop(sd->h);
             sd->result[sd->active] = sd->e->key;
             sd->next_active = sd->e->owner;
             sd->e->owner = sd->active;
-            push(sd->h, sd->e);
+            heap_push(sd->h, sd->e);
             sd->active = sd->next_active;
         }
         else
         {
             sd->result[sd->active] = sd->perm[sd->turn];
             sd->arr[sd->perm[sd->turn]].owner = sd->active;
-            push(sd->h, &sd->arr[sd->perm[sd->turn]]);
+            heap_push(sd->h, &sd->arr[sd->perm[sd->turn]]);
             sd->turn++;
             sd->active = sd->turn;
         }

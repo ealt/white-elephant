@@ -16,8 +16,8 @@ heap *create_heap(size_t n);
 void clear_heap(heap *h);
 void destroy_heap(heap *h);
 
-elem *top(heap *h);
-void push(heap *h, elem *e);
-void pop(heap *h);
+elem *heap_top(heap *h);
+void heap_push(heap *h, elem *e);
+void heap_pop(heap *h);
 
 #endif

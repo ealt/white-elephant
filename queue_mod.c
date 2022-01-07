@@ -30,12 +30,12 @@ static PyObject *_push_pop(PyObject *self, PyObject *args)
     {
         for (unsigned int j = 0; j < k; j++)
         {
-            push(q, &arr[input_data[(i * k) + j]]);
+            queue_push(q, &arr[input_data[(i * k) + j]]);
         }
         for (unsigned int j = 0; j < k; j++)
         {
-            data[(i * k) + j] = top(q)->key;
-            pop(q);
+            data[(i * k) + j] = queue_top(q)->key;
+            queue_pop(q);
         }
     }
     destroy_queue(q);
