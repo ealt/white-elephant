@@ -32,4 +32,12 @@ h_module = Extension('heap',
                      ],
                      include_dirs=[f'{py_pkgs_path}/numpy/core/include/'])
 
-setup(ext_modules=[we_module, pi_module, h_module])
+q_module = Extension('my_queue',
+                     sources=[
+                         'queue_mod.c',
+                         'queue.c',
+                         'elem.c',
+                     ],
+                     include_dirs=[f'{py_pkgs_path}/numpy/core/include/'])
+
+setup(ext_modules=[we_module, pi_module, h_module, q_module])
