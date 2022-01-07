@@ -19,8 +19,10 @@ typedef struct sim_data
     unsigned int *result;
     elem *el;
     heap *h;
+    elem *e;
     unsigned int turn;
     unsigned int active;
+    unsigned int next_active;
 } sim_data;
 
 sim_data create_sim_data(size_t n)
@@ -32,6 +34,8 @@ sim_data create_sim_data(size_t n)
             create_result(n),
             create_elem_list(n),
             create_heap(n),
+            NULL,
+            0,
             0,
             0,
         };
@@ -53,15 +57,34 @@ void destory_sim_data(sim_data *sd)
     destroy_heap(sd->h);
 }
 
+static int steal(void)
+// TODO
+{
+    return 0;
+}
+
 static void simulate_game(sim_data *sd)
 {
     while (sd->turn < sd->n)
     {
-        sd->result[sd->active] = sd->perm[sd->turn];
-        sd->el[sd->perm[sd->turn]].owner = sd->active;
-        push(sd->h, &sd->el[sd->perm[sd->turn]]);
-        sd->turn++;
-        sd->active = sd->turn;
+        if (steal())
+        {
+            sd->e = top(sd->h);
+            pop(sd->h);
+            sd->result[sd->active] = sd->e->key;
+            sd->next_active = sd->e->owner;
+            sd->e->owner = sd->active;
+            push(sd->h, sd->e);
+            sd->active = sd->next_active;
+        }
+        else
+        {
+            sd->result[sd->active] = sd->perm[sd->turn];
+            sd->el[sd->perm[sd->turn]].owner = sd->active;
+            push(sd->h, &sd->el[sd->perm[sd->turn]]);
+            sd->turn++;
+            sd->active = sd->turn;
+        }
     }
 }
 
