@@ -1,5 +1,14 @@
 #include "queue.h"
 
+typedef struct queue
+{
+    elem **arr;
+    unsigned int max_size;
+    unsigned int size;
+    unsigned int front;
+    unsigned int back;
+} queue;
+
 queue *create_queue(size_t n)
 {
     queue *q = (queue *)malloc(sizeof(queue));

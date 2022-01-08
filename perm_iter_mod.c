@@ -25,7 +25,7 @@ static unsigned int *get_data(size_t n)
     unsigned int *data = (unsigned int *)malloc(fn * n * sizeof(unsigned int));
     for (unsigned long i = 0; i < fn; i++)
     {
-        if (st->complete)
+        if (perm_complete(st))
         {
             PyErr_SetString(PyExc_RuntimeError, "Premature permutation complete");
             free(data);
@@ -35,7 +35,7 @@ static unsigned int *get_data(size_t n)
         memcpy(data + (i * n), arr, n * sizeof(unsigned int));
         next(st, arr);
     }
-    if (!st->complete)
+    if (!perm_complete(st))
     {
         PyErr_SetString(PyExc_RuntimeError, "Permutation incomplete");
         free(data);

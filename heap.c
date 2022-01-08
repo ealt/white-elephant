@@ -1,5 +1,12 @@
 #include "heap.h"
 
+typedef struct heap
+{
+    elem **tree;
+    unsigned int max_size;
+    unsigned int size;
+} heap;
+
 heap *create_heap(size_t n)
 {
     heap *h = (heap *)malloc(sizeof(heap));

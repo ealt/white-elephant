@@ -99,7 +99,7 @@ static unsigned long long *simulate_all_games(size_t n)
     unsigned long long *counts = (unsigned long long *)calloc(n * n, sizeof(unsigned long long));
     perm_state *st = create_perm_state(n);
     sim_data sd = create_sim_data(n);
-    while (!st->complete)
+    while (!perm_complete(st))
     {
         simulate_game(&sd);
         update(n, counts, sd.result);

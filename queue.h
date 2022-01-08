@@ -5,14 +5,7 @@
 #include <stdlib.h>
 #include "elem.h"
 
-typedef struct queue
-{
-    elem **arr;
-    unsigned int max_size;
-    unsigned int size;
-    unsigned int front;
-    unsigned int back;
-} queue;
+typedef struct queue queue;
 
 queue *create_queue(size_t n);
 void clear_queue(queue *q);

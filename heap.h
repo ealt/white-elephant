@@ -5,12 +5,7 @@
 #include <stdlib.h>
 #include "elem.h"
 
-typedef struct heap
-{
-    elem **tree;
-    unsigned int max_size;
-    unsigned int size;
-} heap;
+typedef struct heap heap;
 
 heap *create_heap(size_t n);
 void clear_heap(heap *h);

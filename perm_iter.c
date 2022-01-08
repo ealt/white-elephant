@@ -1,5 +1,13 @@
 #include "perm_iter.h"
 
+typedef struct perm_state
+{
+    size_t n;
+    unsigned int *c;
+    unsigned int i;
+    int complete;
+} perm_state;
+
 static void swap(unsigned int *arr, unsigned int i, int j)
 {
     unsigned int temp = arr[i];
@@ -38,6 +46,11 @@ void destroy_perm_state(perm_state *st)
     free(st->c);
     free(st);
     st = NULL;
+}
+
+int perm_complete(perm_state *st)
+{
+    return st->complete;
 }
 
 void next(perm_state *st, unsigned int *arr)
